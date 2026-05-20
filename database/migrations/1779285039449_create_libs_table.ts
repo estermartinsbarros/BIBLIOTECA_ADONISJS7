@@ -9,6 +9,7 @@ export default class extends BaseSchema {
       table.string('titulo').notNullable()
       table.string('autor').notNullable()
       table.text('observacao').nullable()
+      table.string('genero').notNullable()
       table.string('status_leitura').notNullable()
       table.string('ano_publicacao').nullable()
 

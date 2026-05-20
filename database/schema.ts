@@ -8,7 +8,18 @@ import { BaseModel, column } from '@adonisjs/lucid/orm'
 import { DateTime } from 'luxon'
 
 export class AuthAccessTokenSchema extends BaseModel {
-  static $columns = ['abilities', 'createdAt', 'expiresAt', 'hash', 'id', 'lastUsedAt', 'name', 'tokenableId', 'type', 'updatedAt'] as const
+  static $columns = [
+    'abilities',
+    'createdAt',
+    'expiresAt',
+    'hash',
+    'id',
+    'lastUsedAt',
+    'name',
+    'tokenableId',
+    'type',
+    'updatedAt',
+  ] as const
   $columns = AuthAccessTokenSchema.$columns
   @column()
   declare abilities: string
@@ -33,7 +44,18 @@ export class AuthAccessTokenSchema extends BaseModel {
 }
 
 export class LibSchema extends BaseModel {
-  static $columns = ['anoPublicacao', 'autor', 'createdAt', 'id', 'observacao', 'statusLeitura', 'titulo', 'updatedAt', 'userId'] as const
+  static $columns = [
+    'anoPublicacao',
+    'autor',
+    'createdAt',
+    'genero',
+    'id',
+    'observacao',
+    'statusLeitura',
+    'titulo',
+    'updatedAt',
+    'userId',
+  ] as const
   $columns = LibSchema.$columns
   @column()
   declare anoPublicacao: string | null
@@ -41,6 +63,8 @@ export class LibSchema extends BaseModel {
   declare autor: string
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime | null
+  @column()
+  declare genero: string
   @column({ isPrimary: true })
   declare id: number
   @column()

@@ -11,10 +11,7 @@ export default class LibsController {
 
   async show({ auth, params, response }: HttpContext) {
     const user = auth.user!
-    const lib = await Lib.query()
-      .where('id', params.id)
-      .where('user_id', user.id)
-      .first()
+    const lib = await Lib.query().where('id', params.id).where('user_id', user.id).first()
 
     if (!lib) {
       return response.status(404).json({ error: 'Livro não encontrado' })
@@ -25,8 +22,14 @@ export default class LibsController {
   async store({ auth, request }: HttpContext) {
     const user = auth.user!
     const data = await request.validateUsing(createLibValidator)
+
     const lib = await Lib.create({
-      ...data,
+      titulo: data.titulo,
+      autor: data.autor,
+      genero: data.genero,
+      observacao: data.observacao,
+      statusLeitura: data.status_leitura,
+      anoPublicacao: data.ano_publicacao,
       userId: user.id,
     })
     return lib
@@ -34,27 +37,28 @@ export default class LibsController {
 
   async update({ auth, params, request, response }: HttpContext) {
     const user = auth.user!
-    const lib = await Lib.query()
-      .where('id', params.id)
-      .where('user_id', user.id)
-      .first()
+    const lib = await Lib.query().where('id', params.id).where('user_id', user.id).first()
 
     if (!lib) {
       return response.status(404).json({ error: 'Livro não encontrado' })
     }
 
     const data = await request.validateUsing(updateLibValidator)
-    lib.merge(data)
+    lib.merge({
+      titulo: data.titulo,
+      autor: data.autor,
+      genero: data.genero,
+      observacao: data.observacao,
+      statusLeitura: data.status_leitura,
+      anoPublicacao: data.ano_publicacao,
+    })
     await lib.save()
     return lib
   }
 
   async destroy({ auth, params, response }: HttpContext) {
     const user = auth.user!
-    const lib = await Lib.query()
-      .where('id', params.id)
-      .where('user_id', user.id)
-      .first()
+    const lib = await Lib.query().where('id', params.id).where('user_id', user.id).first()
 
     if (!lib) {
       return response.status(404).json({ error: 'Livro não encontrado' })

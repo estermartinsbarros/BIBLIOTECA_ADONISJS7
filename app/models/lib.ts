@@ -19,6 +19,9 @@ export default class Lib extends BaseModel {
   declare observacao: string | null
 
   @column()
+  declare genero: string
+
+  @column()
   declare statusLeitura: string
 
   @column()
